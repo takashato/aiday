@@ -11,16 +11,28 @@ import {mapping, dark as darkTheme} from '@eva-design/eva';
 import {
     StyleSheet,
 } from 'react-native';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from "react-navigation-stack";
 
 import {ApplicationProvider, Layout, Text} from "react-native-ui-kitten";
 import LoginScreen from "./screens/LoginScreen";
 import SplashScreen from "./screens/SplashScreen";
 
-import socket, {init as initSocketIO} from "./net/socketio";
+import MainScreen from "./screens/MainScreen";
 
-const ApplicationContent = () => (
-    <LoginScreen/>
+
+const MainNavigator = createStackNavigator({
+        Login: {screen: LoginScreen},
+        Main: {screen: MainScreen},
+    }, {
+        headerMode: 'float',
+        navigationOptions: ({navigation}) => ({
+            header: null,
+        })
+    },
 );
+
+const ApplicationContent = createAppContainer(MainNavigator);
 
 class App extends React.Component {
     state = {isLoading: true};

@@ -1,16 +1,26 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, Input, Layout} from "react-native-ui-kitten";
+import {navigate} from "react-navigation";
 
 class LoginScreen extends React.Component {
+    static navigationOptions = {header: null};
+
+    doLogin = () => {
+        const {navigate} = this.props.navigation;
+        navigate('Main');
+    };
+
     render() {
         return (
             <Layout style={style.screen} level="2">
                 <Layout style={style.loginForm}>
-                    <Input label="Số điện thoại" autoFocus={true} returnKeyType="next" ref={(input) => this.phoneInput = input}
+                    <Input label="Số điện thoại" autoFocus={true} returnKeyType="next"
+                           ref={(input) => this.phoneInput = input}
                            onSubmitEditting={() => this.passwordInput.focus()}/>
-                    <Input label="Mật khẩu" caretHidden={true} secureTextEntry={true} returnKeyType="done" ref={(input) => this.passwordInput = input}/>
-                    <Button status="primary" style={style.loginBtn}>ĐĂNG NHẬP</Button>
+                    <Input label="Mật khẩu" caretHidden={true} secureTextEntry={true} returnKeyType="done"
+                           ref={(input) => this.passwordInput = input}/>
+                    <Button status="primary" style={style.loginBtn} onPress={this.doLogin}>ĐĂNG NHẬP</Button>
                 </Layout>
             </Layout>
         );
