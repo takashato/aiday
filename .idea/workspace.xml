@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7eb54e4-765a-4e54-9c29-3039cc1fa99e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mobile/lib/screens/MainScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/android/app/src/main/java/com/aiday/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/android/app/src/main/java/com/aiday/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/lib/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/lib/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/screens/LoginScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/screens/MainScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/screens/MainScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -148,6 +148,7 @@
       <workItem from="1574595590339" duration="2586000" />
       <workItem from="1574734778016" duration="472000" />
       <workItem from="1574735435771" duration="11260000" />
+      <workItem from="1574770205473" duration="6358000" />
     </task>
     <servers />
   </component>

@@ -1,14 +1,22 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Layout, Text} from "react-native-ui-kitten";
+import {Icon} from 'react-native-eva-icons';
+import {Layout, Text, TopNavigation, TopNavigationAction} from "react-native-ui-kitten";
+
+const MenuIcon = (style) => (<Icon {...style} name="menu"/>);
 
 class MainScreen extends React.Component {
     static navigationOptions = {header: null};
 
+    renderLeftControl = () => (<TopNavigationAction icon={MenuIcon}/>);
+
     render() {
         return (
-            <Layout style={style.screen}>
-                <Text>???</Text>
+            <Layout style={{flex: 1}}>
+                <TopNavigation title="Ai Đấy?" subTitle="#Rezonia" leftControl={this.renderLeftControl()}/>
+                <Layout level='2' style={{flex: 1}}>
+                    <Text>???</Text>
+                </Layout>
             </Layout>
         );
     }

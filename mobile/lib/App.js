@@ -9,6 +9,7 @@
 import React from 'react';
 import {mapping, dark as darkTheme} from '@eva-design/eva';
 import {
+    StatusBar,
     StyleSheet,
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
@@ -51,9 +52,15 @@ class App extends React.Component {
             app = <SplashScreen/>;
         }
         return (
-            <ApplicationProvider mapping={mapping} theme={darkTheme}>
-                {app}
-            </ApplicationProvider>
+            <>
+                <StatusBar
+                    backgroundColor="#18203B"
+                    barStyle="light-content"
+                />
+                <ApplicationProvider mapping={mapping} theme={darkTheme}>
+                    {app}
+                </ApplicationProvider>
+            </>
         );
     }
 }

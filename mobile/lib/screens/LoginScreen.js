@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, Input, Layout} from "react-native-ui-kitten";
-import {navigate} from "react-navigation";
 
 class LoginScreen extends React.Component {
     static navigationOptions = {header: null};
