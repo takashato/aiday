@@ -2,15 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7eb54e4-765a-4e54-9c29-3039cc1fa99e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/.babelrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/config/server.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/0_61_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/buck_android_support.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/gradle_wrapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/gradle_wrapper1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/server/server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/.expo-shared/assets.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/App.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/assets/icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/assets/splash.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/babel.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/mobile.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/tsconfig.json" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,6 +47,7 @@
   <component name="ProjectId" id="1U2jKPYAKi1mHhz0HgYw5gApptg" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
@@ -68,18 +79,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.start-dev">
+  <component name="RunManager" selected="npm.start">
     <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/dist/index.js" working-dir="$PROJECT_DIR$/server/dist">
-      <method v="2" />
-    </configuration>
-    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
-      <package-json value="$PROJECT_DIR$/server/package.json" />
-      <command value="run" />
-      <scripts>
-        <script value="build" />
-      </scripts>
-      <node-interpreter value="project" />
-      <envs />
       <method v="2" />
     </configuration>
     <configuration name="start (1)" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
@@ -112,13 +113,30 @@
       <envs />
       <method v="2" />
     </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/mobile/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Node.js.index.js" />
+      <item itemvalue="npm.start-dev" />
+      <item itemvalue="npm.start-watch" />
+      <item itemvalue="npm.start (1)" />
+      <item itemvalue="npm.start" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="npm.start" />
         <item itemvalue="npm.start-dev" />
         <item itemvalue="npm.start-watch" />
         <item itemvalue="npm.start (1)" />
         <item itemvalue="Node.js.index.js" />
-        <item itemvalue="npm.build" />
       </list>
     </recent_temporary>
   </component>
@@ -134,7 +152,10 @@
       <updated>1574561519506</updated>
       <workItem from="1574561521001" duration="197000" />
       <workItem from="1574561796654" duration="4560000" />
-      <workItem from="1574588963764" duration="5982000" />
+      <workItem from="1574588963764" duration="6570000" />
+      <workItem from="1574595590339" duration="2586000" />
+      <workItem from="1574734778016" duration="472000" />
+      <workItem from="1574735435771" duration="123000" />
     </task>
     <servers />
   </component>
