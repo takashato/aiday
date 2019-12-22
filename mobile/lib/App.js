@@ -16,10 +16,10 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from "react-navigation-stack";
 
 import {ApplicationProvider, Layout, Text} from "react-native-ui-kitten";
-import LoginScreen from "./screens/LoginScreen";
-import SplashScreen from "./screens/SplashScreen";
+import LoginScreen from "./components/screens/LoginScreen";
+import SplashScreen from "./components/screens/SplashScreen";
 
-import MainScreen from "./screens/MainScreen";
+import MainScreen from "./components/screens/MainScreen";
 
 
 const MainNavigator = createStackNavigator({

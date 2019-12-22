@@ -1,3 +1,8 @@
 {
-  "webUrl": "http://10.0.3.2:3000"
+  "webUrl": "http://10.0.3.2:3000",
+  "options": {
+    "secure": true,
+    "reconnection": true,
+    "rejectUnauthorized": false
+  }
 }
