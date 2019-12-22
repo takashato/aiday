@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import {SafeAreaView, ScrollView} from "react-navigation";
 import {Icon} from 'react-native-eva-icons';
-import {Layout, Tab, TabView, Text, TopNavigation, TopNavigationAction} from "react-native-ui-kitten";
+import {Divider, Layout, Tab, TabView, Text, TopNavigation, TopNavigationAction} from "react-native-ui-kitten";
 import ContactTab from "../tabs/ContactTab";
 import CommunityTab from "../tabs/CommunityTab";
 import MessageTab from "../tabs/MessageTab";
@@ -25,25 +26,25 @@ class MainScreen extends React.Component {
 
     render() {
         return (
-            <Layout style={{flex: 1}}>
+            <SafeAreaView style={{flex: 1}}>
                 <TopNavigation title="Ai Đấy?" subTitle="#Rezonia" leftControl={this.renderLeftControl()}/>
-                <Layout level='2' style={{flex: 1}}>
-                    <TabView selectedIndex={this.state.selectedTabIndex} onSelect={this.handleSelectTab}>
-                        <Tab icon={PeopleIcon}>
-                            <ContactTab/>
-                        </Tab>
-                        <Tab icon={GlobeIcon}>
-                            <CommunityTab/>
-                        </Tab>
-                        <Tab icon={MessageIcon}>
-                            <MessageTab/>
-                        </Tab>
-                        <Tab icon={UserIcon}>
-                            <Text>Người dùng</Text>
-                        </Tab>
+                <Layout level="2" style={{flex: 1}}>
+                    <TabView style={{flex: 1}} selectedIndex={this.state.selectedTabIndex} onSelect={this.handleSelectTab}>
+                            <Tab icon={PeopleIcon}>
+                                <ContactTab/>
+                            </Tab>
+                            <Tab icon={GlobeIcon}>
+                                <CommunityTab/>
+                            </Tab>
+                            <Tab icon={MessageIcon}>
+                                <MessageTab/>
+                            </Tab>
+                            <Tab icon={UserIcon}>
+                                <Text>Người dùng</Text>
+                            </Tab>
                     </TabView>
                 </Layout>
-            </Layout>
+            </SafeAreaView>
         );
     }
 }
