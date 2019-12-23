@@ -4,6 +4,8 @@ import SocketIO from 'socket.io';
 import serverConfig from './config/server';
 import applyHandlers from "./net/io/handlers/handlers";
 
+import {init as initDb} from "./db/db";
+
 const server = Hapi.server(serverConfig.hapi);
 
 const io = SocketIO.listen(server.listener);
@@ -16,8 +18,9 @@ io.sockets.on('connection', function (socket) {
 });
 
 async function init() {
+    if (!await initDb()) process.exit();
     await server.start();
-    console.log('Server is listening on ' + server.info.uri);
+    console.log('>>> Server is listening on ' + server.info.uri);
 }
 
 export default init;

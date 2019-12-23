@@ -2,13 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7eb54e4-765a-4e54-9c29-3039cc1fa99e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/server/src/config/db.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/db/db.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/server/src/sequelize-auto.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/db/models/user_exported.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/net/io/handlers/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/db/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/db/db.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server/src/net/io/handlers/handlers.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/net/io/handlers/handlers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/net/io/handlers/login_handlers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -169,7 +171,7 @@
       <workItem from="1576898101545" duration="3502000" />
       <workItem from="1576943563332" duration="17412000" />
       <workItem from="1577085255273" duration="7392000" />
-      <workItem from="1577106789431" duration="3200000" />
+      <workItem from="1577106789431" duration="4209000" />
     </task>
     <servers />
   </component>

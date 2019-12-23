@@ -16,7 +16,9 @@ export async function init() {
     try {
         await sequelize.authenticate();
         console.log('>>> Connected to database.');
+        return true;
     } catch (e) {
         console.error('Can\'t connect to database: ', e);
+        return false;
     }
 }
