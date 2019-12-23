@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f7eb54e4-765a-4e54-9c29-3039cc1fa99e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/server/src/net/io/handlers/handlers.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/server/src/net/io/handlers/login_handlers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/components/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/components/screens/LoginScreen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/lib/components/screens/MainScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/components/screens/MainScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/components/tabs/MessageTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/components/tabs/MessageTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/net/socketio.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/net/socketio.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/server.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +74,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="React Native.mobile-start">
+  <component name="RunManager" selected="npm.start-dev">
     <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/server/dist/index.js" working-dir="$PROJECT_DIR$/server/dist">
       <method v="2" />
     </configuration>
@@ -150,7 +157,8 @@
       <workItem from="1574816133839" duration="463000" />
       <workItem from="1576814122846" duration="4061000" />
       <workItem from="1576898101545" duration="3502000" />
-      <workItem from="1576943563332" duration="15514000" />
+      <workItem from="1576943563332" duration="17412000" />
+      <workItem from="1577085255273" duration="5258000" />
     </task>
     <servers />
   </component>

@@ -20,6 +20,7 @@ import LoginScreen from "./components/screens/LoginScreen";
 import SplashScreen from "./components/screens/SplashScreen";
 
 import MainScreen from "./components/screens/MainScreen";
+import {init as initSocketIO} from "./net/socketio";
 
 
 const MainNavigator = createStackNavigator({
@@ -38,8 +39,15 @@ const ApplicationContent = createAppContainer(MainNavigator);
 class App extends React.Component {
     state = {isLoading: true};
 
-    componentDidMount() {
-        this.setState({isLoading: false});
+    async componentDidMount() {
+        this.setState({isLoading: true});
+        try {
+            if (await initSocketIO()) {
+                this.setState({isLoading: false});
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     constructor(props) {

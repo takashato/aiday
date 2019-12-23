@@ -1,24 +1,32 @@
 import io from 'socket.io-client';
 import config from '../config';
 
-let socket;
+let socket = null;
 
 export function init() {
-    socket = io(config.webUrl, config.options);
+    return new Promise((resolve, reject) => {
+        if (socket) {
+            return resolve(true);
+        }
+        socket = io(config.webUrl, config.options);
 
-    socket.on('connect', function () {
-        console.log('Connected to server.');
+        socket.on('connect', function () {
+            console.log('Connected to server.');
+            resolve(true);
+        });
+
+        socket.on('connect_error', function (err) {
+            reject(err);
+        });
+
+        socket.on('error', (err) => {
+            reject(err);
+        });
     });
+}
 
-    socket.on('connect_error', function (err) {
-        console.error(err);
-    });
-
-    socket.on('error', (err) => {
-        console.error(err);
-    });
-
+function getSocket() {
     return socket;
 }
 
-export default socket;
+export default getSocket;

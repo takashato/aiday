@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import {Avatar, Input, Layout, Text} from "react-native-ui-kitten";
-import {ScrollView} from "react-navigation";
+import {Icon} from "react-native-eva-icons";
 
 class MessageTab extends React.Component {
     state = {
@@ -52,6 +52,8 @@ class MessageTab extends React.Component {
     };
 
     render() {
+        const SendIcon = style => (<Icon {...style} name="paper-plane"/>);
+
         return (
             <Layout style={style.tab}>
                 <ScrollView>
@@ -59,8 +61,8 @@ class MessageTab extends React.Component {
                         {this.state.data.map(this.renderItem)}
                     </Layout>
                 </ScrollView>
-                <Layout>
-                    <Input/>
+                <Layout style={style.typingArea}>
+                    <Input style={style.textInput} size="small" icon={SendIcon}/>
                 </Layout>
             </Layout>
         );
@@ -89,7 +91,13 @@ const style = StyleSheet.create({
     }, messageName: {
         fontWeight: 'bold',
         marginRight: 5,
-    }, messageText: {}
+    }, messageText: {
+
+    }, typingArea: {
+    }, textInput: {
+        borderRadius: 0,
+        paddingBottom: 0,
+    }
 });
 
 export default MessageTab;

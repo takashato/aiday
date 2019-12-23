@@ -2,6 +2,7 @@ import Hapi from '@hapi/hapi';
 import SocketIO from 'socket.io';
 
 import serverConfig from './config/server';
+import applyHandlers from "./net/io/handlers/handlers";
 
 const server = Hapi.server(serverConfig.hapi);
 
@@ -9,7 +10,9 @@ const io = SocketIO.listen(server.listener);
 
 io.sockets.on('connection', function (socket) {
     var address = socket.request.connection.remoteAddress;
-    console.log(address + ' connected (SocketID ' + socket.id + ").")
+    console.log(address + ' connected (SocketID ' + socket.id + ").");
+
+    applyHandlers(socket);
 });
 
 async function init() {

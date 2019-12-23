@@ -1,6 +1,7 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, Input, Layout, Text} from "react-native-ui-kitten";
+import getSocket from "../../net/socketio";
 
 class LoginScreen extends React.Component {
     static navigationOptions = {header: null};
@@ -10,9 +11,14 @@ class LoginScreen extends React.Component {
         password: null,
     };
 
+    loginHandle = (msg) => {
+
+    };
+
     doLogin = () => {
+        getSocket().emit("login", {username: this.state.username, password: this.state.password});
+        getSocket().on("login response", this.loginHandle);
         const {navigate} = this.props.navigation;
-        navigate('Main');
     };
 
     doRegister = () => {
