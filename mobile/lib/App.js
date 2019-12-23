@@ -21,6 +21,8 @@ import SplashScreen from "./components/screens/SplashScreen";
 
 import MainScreen from "./components/screens/MainScreen";
 import {init as initSocketIO} from "./net/socketio";
+import {Provider} from "react-redux";
+import store from "./redux/store";
 
 
 const MainNavigator = createStackNavigator({
@@ -60,7 +62,7 @@ class App extends React.Component {
             app = <SplashScreen/>;
         }
         return (
-            <>
+            <Provider store={store}>
                 <StatusBar
                     backgroundColor="#18203B"
                     barStyle="light-content"
@@ -68,7 +70,7 @@ class App extends React.Component {
                 <ApplicationProvider mapping={mapping} theme={darkTheme}>
                     {app}
                 </ApplicationProvider>
-            </>
+            </Provider>
         );
     }
 }

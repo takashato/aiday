@@ -30,7 +30,16 @@ export async function doLogin(msg) {
 
     this.user = user;
     this.emit('login response', {
-       user: {...user, password: undefined}
+       user: {
+           id: user.id,
+           username: user.username,
+           email: user.email,
+           birthday: user.birthday,
+           display_name: user.display_name,
+           is_admin: user.is_admin,
+           created_at: user.created_at,
+           updated_at: user.updated_at,
+       }
     });
 }
 
