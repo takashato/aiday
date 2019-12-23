@@ -15,6 +15,8 @@ import {
 import ContactTab from "../tabs/ContactTab";
 import CommunityTab from "../tabs/CommunityTab";
 import MessageTab from "../tabs/MessageTab";
+import {connect} from "react-redux";
+import {setUser} from "../../redux/actions/user";
 
 // const MenuIcon = (style) => (<Icon {...style} name="menu"/>);
 const PeopleIcon = (style) => (<Icon {...style} name="people"/>);
@@ -34,6 +36,7 @@ class MainScreen extends React.Component {
     };
 
     menuData = [{
+        key: 'logout',
         title: 'Đăng xuất',
         icon: LogoutIcon,
     }];
@@ -46,8 +49,12 @@ class MainScreen extends React.Component {
         </OverflowMenu>
     );
 
-    handleMenuItemSelect = (index) => {
-
+    handleMenuItemSelect = async (index) => {
+        console.log(index);
+        if (this.menuData[index].key === 'logout') {
+            await this.toggleMenu();
+            this.props.setUser(null);
+        }
     };
 
     toggleMenu = async () => {
@@ -89,4 +96,11 @@ const style = StyleSheet.create({
     },
 });
 
-export default MainScreen;
+const mapStateToProps = state => ({user: state.user});
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        setUser: (user) => dispatch(setUser(user)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);

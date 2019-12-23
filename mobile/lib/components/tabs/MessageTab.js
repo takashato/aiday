@@ -42,7 +42,7 @@ class MessageTab extends React.Component {
                 <Avatar style={style.messageAvatar} source={{uri: item.avatar}}/>
                 <Layout style={style.messageContent}>
                     <Layout style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                        <Text style={style.messageName} category="S1">{item.full_name}</Text>
+                        <Text style={style.messageName} category="s1">{item.full_name}</Text>
                         <Text appearance="hint" category="c1">{item.time}</Text>
                     </Layout>
                     <Text style={style.messageText}>{item.message}</Text>

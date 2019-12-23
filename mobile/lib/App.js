@@ -21,12 +21,11 @@ import SplashScreen from "./components/screens/SplashScreen";
 
 import MainScreen from "./components/screens/MainScreen";
 import {init as initSocketIO} from "./net/socketio";
-import {Provider} from "react-redux";
+import {connect, Provider} from "react-redux";
 import store from "./redux/store";
 
 
 const MainNavigator = createStackNavigator({
-        Login: {screen: LoginScreen},
         Main: {screen: MainScreen},
     }, {
         headerMode: 'float',
@@ -36,7 +35,16 @@ const MainNavigator = createStackNavigator({
     },
 );
 
-const ApplicationContent = createAppContainer(MainNavigator);
+const MainContainer = createAppContainer(MainNavigator);
+
+const ApplicationContent = connect((state) => ({user: state.user}))(
+    class extends React.Component {
+        render() {
+            if (!this.props.user.data) return <LoginScreen/>;
+            return <MainContainer/>;
+        }
+    }
+);
 
 class App extends React.Component {
     state = {isLoading: true};

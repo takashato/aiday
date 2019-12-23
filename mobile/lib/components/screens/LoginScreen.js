@@ -25,7 +25,6 @@ class LoginScreen extends React.Component {
             return;
         }
         this.props.setUser(msg.user);
-        this.props.navigation.navigate('Main');
     };
 
     doLogin = () => {
@@ -38,7 +37,6 @@ class LoginScreen extends React.Component {
         }
         getSocket().emit("login", {username: username, password: password});
         getSocket().on("login response", this.loginHandle);
-        const {navigate} = this.props.navigation;
     };
 
     doRegister = () => {

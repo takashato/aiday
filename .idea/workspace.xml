@@ -5,9 +5,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/lib/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mobile/lib/components/screens/LoginScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/components/screens/LoginScreen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mobile/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/src/net/io/handlers/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/net/io/handlers/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/components/screens/MainScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/components/screens/MainScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/components/tabs/MessageTab.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/components/tabs/MessageTab.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mobile/lib/redux/actions/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/mobile/lib/redux/actions/user.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -168,7 +168,7 @@
       <workItem from="1576898101545" duration="3502000" />
       <workItem from="1576943563332" duration="17412000" />
       <workItem from="1577085255273" duration="7392000" />
-      <workItem from="1577106789431" duration="11829000" />
+      <workItem from="1577106789431" duration="12748000" />
     </task>
     <servers />
   </component>
