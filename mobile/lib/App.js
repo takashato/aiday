@@ -23,24 +23,36 @@ import MainScreen from "./components/screens/MainScreen";
 import {init as initSocketIO} from "./net/socketio";
 import {connect, Provider} from "react-redux";
 import store from "./redux/store";
+import RegisterScreen from "./components/screens/RegisterScreen";
 
 
 const MainNavigator = createStackNavigator({
-        Main: {screen: MainScreen},
-    }, {
-        headerMode: 'float',
-        navigationOptions: ({navigation}) => ({
-            header: null,
-        })
-    },
-);
+    Main: {screen: MainScreen},
+}, {
+    headerMode: 'float',
+    navigationOptions: ({navigation}) => ({
+        header: null,
+    })
+});
+
+const LoginNavigator = createStackNavigator({
+    Login: {screen: LoginScreen},
+    Register: {screen: RegisterScreen},
+}, {
+    headerMode: 'float',
+    navigationOptions: ({navigation}) => ({
+        header: null,
+    })
+});
 
 const MainContainer = createAppContainer(MainNavigator);
+const LoginContainer = createAppContainer(LoginNavigator);
 
 const ApplicationContent = connect((state) => ({user: state.user}))(
     class extends React.Component {
         render() {
-            if (!this.props.user.data) return <LoginScreen/>;
+            if (!this.props.user.data)
+                return <LoginContainer/>;
             return <MainContainer/>;
         }
     }

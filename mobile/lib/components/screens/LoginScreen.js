@@ -40,7 +40,7 @@ class LoginScreen extends React.Component {
     };
 
     doRegister = () => {
-
+        this.props.navigation.navigate('Register');
     };
 
     render() {
