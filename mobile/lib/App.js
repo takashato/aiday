@@ -15,6 +15,7 @@ import {
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from "react-navigation-stack";
 import AsyncStorage from "@react-native-community/async-storage";
+import {PersistGate} from 'redux-persist/integration/react'
 
 import {ApplicationProvider, Layout, Text} from "react-native-ui-kitten";
 import LoginScreen from "./components/screens/LoginScreen";
@@ -23,7 +24,7 @@ import SplashScreen from "./components/screens/SplashScreen";
 import MainScreen from "./components/screens/MainScreen";
 import {init as initSocketIO} from "./net/socketio";
 import {connect, Provider} from "react-redux";
-import store from "./redux/store";
+import store, {persistor} from "./redux/store";
 import RegisterScreen from "./components/screens/RegisterScreen";
 import {setToken} from "./redux/actions/user";
 
@@ -97,7 +98,9 @@ class App extends React.Component {
                     barStyle="light-content"
                 />
                 <ApplicationProvider mapping={mapping} theme={darkTheme}>
-                    {app}
+                    <PersistGate loading={this.state.isLoading ? app : null} persistor={persistor}>
+                        {app}
+                    </PersistGate>
                 </ApplicationProvider>
             </Provider>
         );
