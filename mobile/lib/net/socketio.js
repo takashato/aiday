@@ -2,6 +2,7 @@ import io from 'socket.io-client';
 import config from '../config';
 import store from "../redux/store";
 import {setUser} from "../redux/actions/user";
+import {handleContactList} from "./handlers/contact_list";
 
 let socket = null;
 
@@ -29,6 +30,9 @@ export function init() {
 
         socket.on('session init response', handleInitSession);
         socket.on('session destroy response', handleDestroySession);
+
+        // Handler area
+        socket.on('contact list', handleContactList);
     });
 }
 

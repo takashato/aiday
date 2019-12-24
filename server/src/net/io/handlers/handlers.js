@@ -2,6 +2,7 @@ import {doLogin, doRegister} from "./login";
 import * as JWT from "jsonwebtoken";
 import serverConfig from '../../../config/server';
 import User from "../../../db/models/user_exported";
+import {retrieveContactList} from "./user";
 
 function applyHandlers(socket) {
     socket.on('login', doLogin);
@@ -12,6 +13,25 @@ function applyHandlers(socket) {
 
     socket.on('disconnect', onDisconnected);
     socket.on('reconnect', onReconnected);
+}
+
+const userHandlers = [
+    {
+        event: 'retrieve contact list',
+        handler: retrieveContactList,
+    },
+];
+
+function bindUserHandlers(socket) {
+    for (let handler of userHandlers) {
+        socket.on(handler.event, handler.handler);
+    }
+}
+
+function unbindUserHandlers(socket) {
+    for (let handler of userHandlers) {
+        socket.off(handler.event, handler.handler);
+    }
 }
 
 async function onDisconnected() {
@@ -40,6 +60,7 @@ async function initSession(msg) {
         }
 
         this.user = user;
+        bindUserHandlers(this);
         this.emit('session init response', {
             user: {
                 id: user.id,
@@ -59,6 +80,7 @@ async function initSession(msg) {
 
 async function destroySession(msg) {
     this.user = undefined;
+    unbindUserHandlers(this);
     this.emit('session destroy response', {});
 }
 

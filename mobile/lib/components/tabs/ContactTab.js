@@ -1,67 +1,50 @@
 import React from 'react';
+import {RefreshControl} from 'react-native';
 import {List, ListItem} from "react-native-ui-kitten";
 import {Icon} from "react-native-eva-icons";
+import getSocket from "../../net/socketio";
+import {connect} from "react-redux";
 
 const PersonIcon = (style) => (<Icon {...style} name="person"/>);
 
 class ContactTab extends React.Component {
     state = {
-        data: [
-            {
-                username: 'takashato',
-                full_name: 'Bành Thanh Sơn',
-            }, {
-                username: 'kawakashi',
-                full_name: 'Phạm Trần Chính'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            }, {
-                username: 'user',
-                full_name: 'Người dùng'
-            },
-        ],
+        refreshing: false,
     };
 
     renderItem = ({item, index}) => {
         return (
-            <ListItem title={item.username} description={item.full_name} icon={PersonIcon}/>
+            <ListItem title={item.username} description={item.display_name} icon={PersonIcon}/>
         );
     };
 
-    render() {
+    async componentDidMount() {
+        this.doRefresh();
+        getSocket().on('contact list', this.contactListRetrieved);
+    }
 
+    contactListRetrieved = (msg) => {
+        this.setState({refreshing: false});
+    };
+    
+    doRefresh = async () => {
+        this.setState({refreshing: true});
+        getSocket().emit('retrieve contact list');
+    };
+
+    render() {
         return (
-            <List data={this.state.data} renderItem={this.renderItem}/>
+            <List data={this.props.contactList.list} renderItem={this.renderItem}
+                  refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.doRefresh}/>}
+            />
         );
     }
 }
 
-export default ContactTab;
+const mapStateToProps = state => {
+    return {
+        contactList: state.contactList,
+    }
+};
+
+export default connect(mapStateToProps)(ContactTab);
