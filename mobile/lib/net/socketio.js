@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
 import config from '../config';
+import store from "../redux/store";
+import {setUser} from "../redux/actions/user";
 
 let socket = null;
 
@@ -22,11 +24,35 @@ export function init() {
         socket.on('error', (err) => {
             reject(err);
         });
+
+        socket.on('reconnect', handleReconnect);
+
+        socket.on('session init response', handleInitSession);
+        socket.on('session destroy response', handleDestroySession);
     });
 }
 
 function getSocket() {
     return socket;
+}
+
+async function handleInitSession(msg) {
+    if (msg.error) {
+        console.log(msg.error);
+        return;
+    }
+    console.log('Session initialized successfully.');
+    store.dispatch(setUser(msg.user));
+}
+
+async function handleDestroySession(msg) {
+    console.log('Session destroyed successfully.');
+    store.dispatch(setUser(null));
+}
+
+async function handleReconnect(msg) {
+    const token = store.getState().user.accessToken;
+    getSocket().emit('session init', {accessToken: token});
 }
 
 export default getSocket;

@@ -1,6 +1,7 @@
 import Bcrypt from "bcrypt";
 import User from "../../../db/models/user_exported";
 import moment from "moment";
+import serverConfig from "../../../config/server";
 import JWT from 'jsonwebtoken';
 
 export async function doLogin(msg) {
@@ -30,18 +31,21 @@ export async function doLogin(msg) {
         return;
     }
 
-    this.user = user;
     this.emit('login response', {
-        user: {
+        // user: {
+        //     id: user.id,
+        //     username: user.username,
+        //     email: user.email,
+        //     birthday: user.birthday,
+        //     display_name: user.display_name,
+        //     is_admin: user.is_admin,
+        //     created_at: user.created_at,
+        //     updated_at: user.updated_at,
+        // },
+        accessToken: JWT.sign({
             id: user.id,
-            username: user.username,
-            email: user.email,
-            birthday: user.birthday,
-            display_name: user.display_name,
-            is_admin: user.is_admin,
-            created_at: user.created_at,
-            updated_at: user.updated_at,
-        }
+            username: user.username
+        }, serverConfig.jwtSecretKey, {expiresIn: '30d'}),
     });
 }
 
@@ -101,16 +105,10 @@ export async function doRegister(msg) {
             return;
         }
         this.emit('register response', {
-            user: {
+            accessToken: JWT.sign({
                 id: user.id,
-                username: user.username,
-                email: user.email,
-                birthday: user.birthday,
-                display_name: user.display_name,
-                is_admin: user.is_admin,
-                created_at: user.created_at,
-                updated_at: user.updated_at,
-            }
+                username: user.username
+            }, serverConfig.jwtSecretKey, {expiresIn: '30d'}),
         });
     } catch (err) {
         console.log(err);

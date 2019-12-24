@@ -13,7 +13,7 @@ import {
 import {Icon} from "react-native-eva-icons";
 import moment from "moment";
 import getSocket from "../../net/socketio";
-import {setUser} from "../../redux/actions/user";
+import {setToken, setUser} from "../../redux/actions/user";
 import {connect} from "react-redux";
 
 const ArrowBackIcon = (style) => (<Icon {...style} name="arrow-back"/>);
@@ -164,7 +164,7 @@ const style = StyleSheet.create({
 
 const mapDispatchToProps = dispatch => {
     return {
-        setUser: user => dispatch(setUser(user)),
+        setToken: token => dispatch(setToken(token))
     };
 };
 

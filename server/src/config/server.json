@@ -6,5 +6,6 @@
   "io": {
     "port": 3001,
     "host": "0.0.0.0"
-  }
+  },
+  "jwtSecretKey": "2A0A4E3510D47E85F2BDD046B4DEA81F6C9DA801A99C5BD8C2203C404E1B3CAC"
 }

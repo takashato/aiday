@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Button, Input, Layout, Text} from "react-native-ui-kitten";
 import getSocket from "../../net/socketio";
-import {setUser} from "../../redux/actions/user";
+import {setToken} from "../../redux/actions/user";
 import {connect} from "react-redux";
 
 class LoginScreen extends React.Component {
@@ -24,7 +24,7 @@ class LoginScreen extends React.Component {
             }
             return;
         }
-        this.props.setUser(msg.user);
+        this.props.setToken(msg.accessToken);
     };
 
     doLogin = () => {
@@ -104,7 +104,7 @@ const style = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        setUser: (user) => dispatch(setUser(user))
+        setToken: (token) => dispatch(setToken(token)),
     };
 };
 

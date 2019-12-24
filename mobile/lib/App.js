@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from "react-navigation-stack";
+import AsyncStorage from "@react-native-community/async-storage";
 
 import {ApplicationProvider, Layout, Text} from "react-native-ui-kitten";
 import LoginScreen from "./components/screens/LoginScreen";
@@ -24,6 +25,7 @@ import {init as initSocketIO} from "./net/socketio";
 import {connect, Provider} from "react-redux";
 import store from "./redux/store";
 import RegisterScreen from "./components/screens/RegisterScreen";
+import {setToken} from "./redux/actions/user";
 
 
 const MainNavigator = createStackNavigator({
@@ -51,7 +53,7 @@ const LoginContainer = createAppContainer(LoginNavigator);
 const ApplicationContent = connect((state) => ({user: state.user}))(
     class extends React.Component {
         render() {
-            if (!this.props.user.data)
+            if (!this.props.user.accessToken)
                 return <LoginContainer/>;
             return <MainContainer/>;
         }
@@ -62,8 +64,15 @@ class App extends React.Component {
     state = {isLoading: true};
 
     async componentDidMount() {
-        this.setState({isLoading: true});
+        await this.setState({isLoading: true});
         try {
+            try {
+                const token = await AsyncStorage.getItem('accessToken');
+                if (token)
+                    await store.dispatch(setToken(token));
+            } catch (err) {
+                console.log(err);
+            }
             if (await initSocketIO()) {
                 this.setState({isLoading: false});
             }

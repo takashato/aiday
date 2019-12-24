@@ -16,7 +16,7 @@ import ContactTab from "../tabs/ContactTab";
 import CommunityTab from "../tabs/CommunityTab";
 import MessageTab from "../tabs/MessageTab";
 import {connect} from "react-redux";
-import {setUser} from "../../redux/actions/user";
+import {setToken, setUser} from "../../redux/actions/user";
 
 // const MenuIcon = (style) => (<Icon {...style} name="menu"/>);
 const PeopleIcon = (style) => (<Icon {...style} name="people"/>);
@@ -53,7 +53,7 @@ class MainScreen extends React.Component {
         console.log(index);
         if (this.menuData[index].key === 'logout') {
             await this.toggleMenu();
-            this.props.setUser(null);
+            this.props.setToken(null);
         }
     };
 
@@ -100,6 +100,7 @@ const mapStateToProps = state => ({user: state.user});
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         setUser: (user) => dispatch(setUser(user)),
+        setToken: token => dispatch(setToken(token)),
     };
 };
 
