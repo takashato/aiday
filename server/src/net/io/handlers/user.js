@@ -1,10 +1,25 @@
 import User from "../../../db/models/user_exported";
+import PrivateRoom from "../../../db/models/private_room_exported";
+import {Op} from "sequelize";
+import {makeUserIdsInOrder} from "../helpers/room";
 
 export async function retrieveContactList(msg) {
     const users = await User.findAll({order: [['username', 'asc']]});
     let res = [];
     for (let user of users) {
-        res.push({id: user.id, username: user.username, display_name: user.display_name});
+        if (user.id === this.user.id) continue;
+        let roomId = null;
+        const {user1_id, user2_id} = makeUserIdsInOrder(this.user.id, user.id);
+        const pRoom = await PrivateRoom.findOne({
+            where: {
+                [Op.or]: [
+                    {user1_id},
+                    {user2_id},
+                ]
+            }, attributes: ['room_id'],
+        });
+        if (pRoom) roomId = pRoom.room_id;
+        res.push({id: user.id, username: user.username, display_name: user.display_name, room_id: roomId});
     }
     this.emit('contact list', {
         list: res,

@@ -16,7 +16,7 @@ import ContactTab from "../tabs/ContactTab";
 import CommunityTab from "../tabs/CommunityTab";
 import MessageTab from "../tabs/MessageTab";
 import {connect} from "react-redux";
-import {setToken, setUser} from "../../redux/actions/user";
+import {setTabIndex, setToken, setUser} from "../../redux/actions/user";
 
 // const MenuIcon = (style) => (<Icon {...style} name="menu"/>);
 const PeopleIcon = (style) => (<Icon {...style} name="people"/>);
@@ -61,7 +61,7 @@ class MainScreen extends React.Component {
         await this.setState({menuVisible: !this.state.menuVisible});
     };
 
-    handleSelectTab = (index) => this.setState({selectedTabIndex: index});
+    handleSelectTab = (index) => this.props.setTabIndex(index);
 
     render() {
         return (
@@ -69,7 +69,7 @@ class MainScreen extends React.Component {
                 <TopNavigation title="Aiday - Chat app" titleStyle={{fontWeight: 'bold'}}
                                leftControl={this.renderLeftControl()} rightControls={this.renderRightControl()}/>
                 <Layout level="2" style={{flex: 1}}>
-                    <TabView style={{flex: 1}} selectedIndex={this.state.selectedTabIndex}
+                    <TabView style={{flex: 1}} selectedIndex={this.props.user.tabIndex}
                              onSelect={this.handleSelectTab}>
                         <Tab icon={PeopleIcon}>
                             <ContactTab/>
@@ -101,6 +101,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         setUser: (user) => dispatch(setUser(user)),
         setToken: token => dispatch(setToken(token)),
+        setTabIndex: tabIndex => dispatch(setTabIndex(tabIndex)),
     };
 };
 

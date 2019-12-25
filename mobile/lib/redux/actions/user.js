@@ -4,6 +4,7 @@ import store from "../store";
 
 export const SET_USER = 'SET_USER';
 export const SET_TOKEN = 'SET_TOKEN';
+export const SET_TAB_INDEX = 'SET_TAB_INDEX';
 
 export function setUser(user) {
     return {
@@ -31,5 +32,12 @@ export function setToken(token) {
         }
 
         dispatch({type: SET_TOKEN, accessToken: token});
+    };
+}
+
+export function setTabIndex(tabIndex) {
+    return {
+        type: SET_TAB_INDEX,
+        tabIndex,
     };
 }
