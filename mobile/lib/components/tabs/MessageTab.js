@@ -4,38 +4,10 @@ import {Avatar, Button, Input, Layout, Text} from "react-native-ui-kitten";
 import {Icon} from "react-native-eva-icons";
 import {connect} from "react-redux";
 import getSocket from "../../net/socketio";
+import {pushMessage} from "../../redux/actions/message";
 
 class MessageTab extends React.Component {
     state = {
-        data: [
-            {
-                'avatar': 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
-                'full_name': 'Bành Thanh Sơn',
-                'message': 'Xin chào!!!',
-                'time': '22:48 22/12/2019',
-            },
-            {
-                'avatar': 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
-                'full_name': 'Bành Thanh Sơn',
-                'message': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce euismod laoreet libero a cursus. Nulla elementum varius tortor, auctor efficitur sapien facilisis et. Proin non turpis purus. Nam id cursus sapien, et condimentum tellus. Cras arcu tellus, gravida vitae tempus vel, interdum sit amet sem. Nulla facilisi. Curabitur mi nunc, pellentesque at ante vitae, auctor hendrerit lorem. Nunc quis varius sapien. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec facilisis, nunc sed commodo vulputate, risus turpis semper felis, eget semper mi nisi eget erat. Fusce vitae nisl in ante suscipit tristique.',
-                'time': '22:48 22/12/2019',
-            }, {
-                'avatar': 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
-                'full_name': 'Bành Thanh Sơn',
-                'message': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce euismod laoreet libero a cursus. Nulla elementum varius tortor, auctor efficitur sapien facilisis et. Proin non turpis purus. Nam id cursus sapien, et condimentum tellus. Cras arcu tellus, gravida vitae tempus vel, interdum sit amet sem. Nulla facilisi. Curabitur mi nunc, pellentesque at ante vitae, auctor hendrerit lorem. Nunc quis varius sapien. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec facilisis, nunc sed commodo vulputate, risus turpis semper felis, eget semper mi nisi eget erat. Fusce vitae nisl in ante suscipit tristique.',
-                'time': '22:48 22/12/2019',
-            }, {
-                'avatar': 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
-                'full_name': 'Bành Thanh Sơn',
-                'message': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce euismod laoreet libero a cursus. Nulla elementum varius tortor, auctor efficitur sapien facilisis et. Proin non turpis purus. Nam id cursus sapien, et condimentum tellus. Cras arcu tellus, gravida vitae tempus vel, interdum sit amet sem. Nulla facilisi. Curabitur mi nunc, pellentesque at ante vitae, auctor hendrerit lorem. Nunc quis varius sapien. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec facilisis, nunc sed commodo vulputate, risus turpis semper felis, eget semper mi nisi eget erat. Fusce vitae nisl in ante suscipit tristique.',
-                'time': '22:48 22/12/2019',
-            }, {
-                'avatar': 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
-                'full_name': 'Bành Thanh Sơn',
-                'message': 'Textssssss.',
-                'time': '22:48 22/12/2019',
-            },
-        ],
         chatText: '',
     };
 
@@ -55,9 +27,18 @@ class MessageTab extends React.Component {
         if (!this.state.chatText || this.state.chatText === '') return;
         const {chatText} = this.state;
         this.setState({chatText: ''});
+        const pendingStamp = new Date().getTime();
+        this.props.pushMessage(this.props.message.roomId, {
+            id: -1,
+            message: chatText,
+            user: this.props.user.data,
+            pending_stamp: pendingStamp,
+        });
+
         getSocket().emit('push message', {
             room_id: this.props.message.roomId,
             message: chatText,
+            pending_stamp: pendingStamp,
         });
     };
 
@@ -67,8 +48,8 @@ class MessageTab extends React.Component {
 
     renderItem = (item) => {
         return (
-            <Layout style={style.message}>
-                <Avatar style={style.messageAvatar} source={{uri: item.avatar}}/>
+            <Layout style={item.pending_stamp != 0 ? style.pendingMessage : style.message}>
+                <Avatar style={style.messageAvatar} source={{uri: item.user.avatar}}/>
                 <Layout style={style.messageContent}>
                     <Layout style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={style.messageName} category="s1">{item.user.display_name}</Text>
@@ -134,6 +115,10 @@ const style = StyleSheet.create({
     }, message: {
         flex: 1,
         flexDirection: 'row',
+    }, pendingMessage: {
+        flex: 1,
+        flexDirection: 'row',
+        opacity: 0.5,
     }, messageAvatar: {
         marginTop: 10,
     }, messageContent: {
@@ -157,8 +142,15 @@ const style = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
+        user: state.user,
         message: state.message,
     }
 };
 
-export default connect(mapStateToProps)(MessageTab);
+const mapDispatchToProps = dispatch => {
+    return {
+        pushMessage: (room_id, message) => dispatch(pushMessage(room_id, message)),
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageTab);

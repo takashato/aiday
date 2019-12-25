@@ -10,36 +10,46 @@ export async function retrieveMessage(msg) {
         return;
     }
     if (!this.subscribedRooms.includes('@' + room_id)) return;
-    const messages = await Message.findAll({
-        where: {
-            room_id: room_id
-        },
-        order: [['updated_at', 'desc']],
-        limit: 20,
-        offset: 20 * step,
-        include: [
-            {
-                model: User,
-                as: 'user',
-                attributes: ['id', 'username', 'display_name', 'is_admin'],
-            }
-        ]
-    });
-    const res = [];
-    for (let message of messages) {
-        res.push({
-            id: message.id,
-            message: message.message,
-            created_at: message.created_at,
-            updated_at: message.updated_at,
-            user: message.user,
-            avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
+    try {
+        const messages = await Message.findAll({
+            where: {
+                room_id: room_id
+            },
+            order: [['updated_at', 'desc']],
+            limit: 20,
+            offset: 20 * step,
+            include: [
+                {
+                    model: User,
+                    as: 'user',
+                    attributes: ['id', 'username', 'display_name', 'is_admin'],
+                }
+            ]
         });
+        const res = [];
+        for (let message of messages) {
+            res.push({
+                id: message.id,
+                message: message.message,
+                created_at: message.created_at,
+                updated_at: message.updated_at,
+                user: {
+                    id: message.user.id,
+                    username: message.user.username,
+                    display_name: message.user.display_name,
+                    is_admin: message.user.is_admin,
+                    avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
+                },
+                pending_stamp: 0,
+            });
+        }
+        this.emit('messages', {
+            room_id: room_id,
+            messages: res,
+        });
+    } catch (err) {
+        console.log(err);
     }
-    this.emit('messages', {
-        room_id: room_id,
-        messages: res,
-    });
 }
 
 export async function pushMessage(msg) {
@@ -67,13 +77,17 @@ export async function pushMessage(msg) {
         });
     }
 
-    io.in('@' + room_id).emit('message', {
+    this.emit('push message response', {
+        room_id: room_id,
+        pending_stamp: msg.pending_stamp,
+    });
+    this.in('@' + room_id).emit('message', {
         room_id: room_id,
         message: {
             id: messageObj.id,
-            avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
             message: message,
             user: {
+                avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
                 id: this.user.id,
                 username: this.user.username,
                 display_name: this.user.display_name,
@@ -81,6 +95,7 @@ export async function pushMessage(msg) {
             },
             created_at: messageObj.created_at,
             updated_at: messageObj.updated_at,
+            pending_stamp: 0,
         }
     });
 }

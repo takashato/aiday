@@ -3,7 +3,7 @@ import config from '../config';
 import store from "../redux/store";
 import {setUser} from "../redux/actions/user";
 import {handleContactList} from "./handlers/contact_list";
-import {handleMessage, handleRetrieveMessage} from "./handlers/message";
+import {handleMessage, handlePushMessageResponse, handleRetrieveMessage} from "./handlers/message";
 
 let socket = null;
 
@@ -37,6 +37,7 @@ export function init() {
 
         socket.on('messages', handleRetrieveMessage);
         socket.on('message', handleMessage);
+        socket.on('push message response', handlePushMessageResponse);
     });
 }
 

@@ -19,7 +19,13 @@ export async function retrieveContactList(msg) {
             }, attributes: ['room_id'],
         });
         if (pRoom) roomId = pRoom.room_id;
-        res.push({id: user.id, username: user.username, display_name: user.display_name, room_id: roomId});
+        res.push({
+            id: user.id,
+            username: user.username,
+            display_name: user.display_name,
+            room_id: roomId,
+            avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
+        });
     }
     this.emit('contact list', {
         list: res,

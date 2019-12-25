@@ -1,5 +1,5 @@
 import store from "../../redux/store";
-import {pushMessage, setMessages} from "../../redux/actions/message";
+import {pushMessage, removeMessageStamp, setMessages} from "../../redux/actions/message";
 
 export function handleRetrieveMessage(msg) {
     if (!msg.room_id || !msg.messages) return;
@@ -9,4 +9,11 @@ export function handleRetrieveMessage(msg) {
 export function handleMessage(msg) {
     if (!msg.room_id || !msg.message) return;
     store.dispatch(pushMessage(msg.room_id, msg.message));
+}
+
+export function handlePushMessageResponse(msg) {
+    const {room_id, pending_stamp} = msg;
+    console.log('push response', msg);
+    if (!room_id || !pending_stamp) return;
+    store.dispatch(removeMessageStamp(msg.room_id, msg.pending_stamp));
 }

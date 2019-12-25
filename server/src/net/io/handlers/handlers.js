@@ -87,6 +87,7 @@ async function initSession(msg) {
                 is_admin: user.is_admin,
                 created_at: user.created_at,
                 updated_at: user.updated_at,
+                avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
             },
         });
         // Subscribe all room

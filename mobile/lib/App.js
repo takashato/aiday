@@ -98,9 +98,10 @@ class App extends React.Component {
                     barStyle="light-content"
                 />
                 <ApplicationProvider mapping={mapping} theme={darkTheme}>
-                    <PersistGate loading={this.state.isLoading ? app : null} persistor={persistor}>
-                        {app}
-                    </PersistGate>
+                    {/*<PersistGate loading={this.state.isLoading ? app : null} persistor={persistor}>*/}
+                    {/*    {app}*/}
+                    {/*</PersistGate>*/}
+                    {app}
                 </ApplicationProvider>
             </Provider>
         );
