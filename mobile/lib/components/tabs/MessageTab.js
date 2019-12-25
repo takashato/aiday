@@ -1,7 +1,9 @@
 import React from 'react';
-import {StyleSheet, ScrollView} from 'react-native';
-import {Avatar, Input, Layout, Text} from "react-native-ui-kitten";
+import {StyleSheet, ScrollView, Keyboard} from 'react-native';
+import {Avatar, Button, Input, Layout, Text} from "react-native-ui-kitten";
 import {Icon} from "react-native-eva-icons";
+import {connect} from "react-redux";
+import getSocket from "../../net/socketio";
 
 class MessageTab extends React.Component {
     state = {
@@ -33,7 +35,34 @@ class MessageTab extends React.Component {
                 'message': 'Textssssss.',
                 'time': '22:48 22/12/2019',
             },
-        ]
+        ],
+        chatText: '',
+    };
+
+    componentDidMount(): void {
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+    }
+
+    componentWillUnmount(): void {
+        this.keyboardDidShowListener.remove();
+    }
+
+    keyboardDidShow = () => {
+        this.scrollView.scrollToEnd({animated: true});
+    };
+
+    sendMessage = async () => {
+        if (!this.state.chatText || this.state.chatText === '') return;
+        const {chatText} = this.state;
+        this.setState({chatText: ''});
+        getSocket().emit('push message', {
+            room_id: this.props.message.roomId,
+            message: chatText,
+        });
+    };
+
+    onTyping = (value) => {
+        this.setState({chatText: value});
     };
 
     renderItem = (item) => {
@@ -42,8 +71,8 @@ class MessageTab extends React.Component {
                 <Avatar style={style.messageAvatar} source={{uri: item.avatar}}/>
                 <Layout style={style.messageContent}>
                     <Layout style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-                        <Text style={style.messageName} category="s1">{item.full_name}</Text>
-                        <Text appearance="hint" category="c1">{item.time}</Text>
+                        <Text style={style.messageName} category="s1">{item.user.display_name}</Text>
+                        <Text appearance="hint" category="c1">{item.updated_at}</Text>
                     </Layout>
                     <Text style={style.messageText}>{item.message}</Text>
                 </Layout>
@@ -51,19 +80,43 @@ class MessageTab extends React.Component {
         );
     };
 
+    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS): void {
+        // console.log(this.props.message);
+    }
+
     render() {
         const SendIcon = style => (<Icon {...style} name="paper-plane"/>);
+        const room_id = this.props.message.roomId;
+        let messages = [];
+        if (room_id) {
+            if (this.props.message.messages[room_id]) {
+                messages = this.props.message.messages[room_id];
+            }
+        }
 
         return (
             <Layout style={style.tab}>
-                <ScrollView>
-                    <Layout style={style.container}>
-                        {this.state.data.map(this.renderItem)}
-                    </Layout>
-                </ScrollView>
-                <Layout style={style.typingArea}>
-                    <Input style={style.textInput} size="small" icon={SendIcon}/>
-                </Layout>
+                {this.props.message.roomId ?
+                    <>
+                        <ScrollView ref={ref => this.scrollView = ref}
+                                    onContentSizeChange={(contentWidth, contentHeight) => {
+                                        this.scrollView.scrollToEnd({animated: true});
+                                    }}>
+                            <Layout style={style.container}>
+                                {messages.map(this.renderItem)}
+                            </Layout>
+                        </ScrollView>
+                        <Layout style={style.typingArea}>
+                            <Input style={style.textInput} onChangeText={this.onTyping} value={this.state.chatText}
+                                   size="small"
+                                   onSubmitEditting={this.sendMessage}
+                                   placeholder="Nhập gì đó để chat..."
+                            />
+                            <Button appearance="ghost" status="primary" icon={SendIcon} onPress={this.sendMessage}/>
+                        </Layout>
+                    </>
+                    : <Text style={{flex: 1, margin: 10}}>Chọn một liên hệ / phòng chat để bắt đầu.</Text>
+                }
             </Layout>
         );
     }
@@ -91,13 +144,21 @@ const style = StyleSheet.create({
     }, messageName: {
         fontWeight: 'bold',
         marginRight: 5,
-    }, messageText: {
-
-    }, typingArea: {
+    }, messageText: {}, typingArea: {
+        flexDirection: 'row',
+        padding: 3,
     }, textInput: {
-        borderRadius: 0,
+        flex: 1,
+        borderRadius: 10,
         paddingBottom: 0,
+        marginBottom: 0,
     }
 });
 
-export default MessageTab;
+const mapStateToProps = state => {
+    return {
+        message: state.message,
+    }
+};
+
+export default connect(mapStateToProps)(MessageTab);

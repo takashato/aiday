@@ -8,7 +8,7 @@ import {init as initDb} from "./db/db";
 
 const server = Hapi.server(serverConfig.hapi);
 
-const io = SocketIO.listen(server.listener);
+export const io = SocketIO.listen(server.listener);
 
 io.sockets.on('connection', function (socket) {
     var address = socket.request.connection.remoteAddress;

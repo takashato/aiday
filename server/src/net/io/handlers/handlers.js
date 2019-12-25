@@ -7,6 +7,7 @@ import RoomUser from "../../../db/models/room_user_exported";
 import {subscribeAllRoom} from "../helpers/room";
 import {createRoom} from "./room";
 import userSocketMap from "../storages/user_socket_map";
+import {pushMessage, retrieveMessage} from "./message";
 
 function applyHandlers(socket) {
     socket.on('login', doLogin);
@@ -26,6 +27,12 @@ const userHandlers = [
     }, {
         event: 'create room',
         handler: createRoom,
+    }, {
+        event: 'retrieve message',
+        handler: retrieveMessage
+    }, {
+        event: 'push message',
+        handler: pushMessage
     }
 ];
 
