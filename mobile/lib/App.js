@@ -65,7 +65,7 @@ class App extends React.Component {
     state = {isLoading: true};
 
     async componentDidMount() {
-        await this.setState({isLoading: true});
+        this.setState({isLoading: true});
         try {
             try {
                 const token = await AsyncStorage.getItem('accessToken');
@@ -87,9 +87,11 @@ class App extends React.Component {
     }
 
     render() {
-        let app = <ApplicationContent/>;
+        let app;
         if (this.state.isLoading) {
             app = <SplashScreen/>;
+        } else {
+            app = <ApplicationContent/>;
         }
         return (
             <Provider store={store}>

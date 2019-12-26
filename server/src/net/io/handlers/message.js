@@ -15,7 +15,7 @@ export async function retrieveMessage(msg) {
             where: {
                 room_id: room_id
             },
-            order: [['updated_at', 'desc']],
+            order: [['id', 'desc']],
             limit: 20,
             offset: 20 * step,
             include: [
@@ -28,7 +28,7 @@ export async function retrieveMessage(msg) {
         });
         const res = [];
         for (let message of messages) {
-            res.push({
+            res.unshift({
                 id: message.id,
                 message: message.message,
                 created_at: message.created_at,

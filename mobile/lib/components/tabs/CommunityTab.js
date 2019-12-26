@@ -1,5 +1,5 @@
 import React from 'react';
-import {List} from "react-native-ui-kitten";
+import {Layout, List} from "react-native-ui-kitten";
 import {ListItem} from "react-native-ui-kitten/ui/list/listItem.component";
 import {Icon} from "react-native-eva-icons";
 
@@ -26,7 +26,9 @@ class CommunityTab extends React.Component {
 
     render() {
         return (
-            <List data={this.state.data} renderItem={this.renderItem}/>
+            <Layout style={{flex: 1}}>
+                <List data={this.state.data} renderItem={this.renderItem}/>
+            </Layout>
         );
     }
 }

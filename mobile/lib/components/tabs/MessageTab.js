@@ -1,10 +1,11 @@
 import React from 'react';
-import {StyleSheet, ScrollView, Keyboard} from 'react-native';
+import {StyleSheet, ScrollView, Keyboard, RefreshControl} from 'react-native';
 import {Avatar, Button, Input, Layout, Text} from "react-native-ui-kitten";
 import {Icon} from "react-native-eva-icons";
 import {connect} from "react-redux";
 import getSocket from "../../net/socketio";
-import {pushMessage} from "../../redux/actions/message";
+import {pushMessage, setMessages, setRoomId} from "../../redux/actions/message";
+import moment from "moment";
 
 class MessageTab extends React.Component {
     state = {
@@ -33,6 +34,7 @@ class MessageTab extends React.Component {
             message: chatText,
             user: this.props.user.data,
             pending_stamp: pendingStamp,
+            updated_at: moment().format(),
         });
 
         getSocket().emit('push message', {
@@ -42,18 +44,23 @@ class MessageTab extends React.Component {
         });
     };
 
+    doRefresh = () => {
+        this.props.setMessages(this.props.message.roomId, []);
+        this.props.setRoomId(this.props.message.roomId);
+    };
+
     onTyping = (value) => {
         this.setState({chatText: value});
     };
 
     renderItem = (item) => {
         return (
-            <Layout style={item.pending_stamp != 0 ? style.pendingMessage : style.message}>
+            <Layout style={item.pending_stamp !== 0 ? style.pendingMessage : style.message}>
                 <Avatar style={style.messageAvatar} source={{uri: item.user.avatar}}/>
                 <Layout style={style.messageContent}>
                     <Layout style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={style.messageName} category="s1">{item.user.display_name}</Text>
-                        <Text appearance="hint" category="c1">{item.updated_at}</Text>
+                        <Text appearance="hint" category="c1">{moment(item.updated_at).format("HH:mm:SS DD/MM/YYYY")}</Text>
                     </Layout>
                     <Text style={style.messageText}>{item.message}</Text>
                 </Layout>
@@ -68,11 +75,14 @@ class MessageTab extends React.Component {
     render() {
         const SendIcon = style => (<Icon {...style} name="paper-plane"/>);
         const room_id = this.props.message.roomId;
-        let messages = [];
-        if (room_id) {
-            if (this.props.message.messages[room_id]) {
-                messages = this.props.message.messages[room_id];
-            }
+        let messages;
+        if (room_id && this.props.message.messages[room_id]) {
+            messages = this.props.message.messages[room_id];
+        } else {
+            messages = {
+                loaded: false,
+                data: [],
+            };
         }
 
         return (
@@ -82,9 +92,12 @@ class MessageTab extends React.Component {
                         <ScrollView ref={ref => this.scrollView = ref}
                                     onContentSizeChange={(contentWidth, contentHeight) => {
                                         this.scrollView.scrollToEnd({animated: true});
-                                    }}>
+                                    }}
+                                    refreshControl={<RefreshControl refreshing={this.props.message.refreshing}
+                                                                    onRefresh={this.doRefresh}/>}
+                        >
                             <Layout style={style.container}>
-                                {messages.map(this.renderItem)}
+                                {messages.data.map(this.renderItem)}
                             </Layout>
                         </ScrollView>
                         <Layout style={style.typingArea}>
@@ -150,6 +163,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         pushMessage: (room_id, message) => dispatch(pushMessage(room_id, message)),
+        setMessages: (room_id, messages) => dispatch(setMessages(room_id, messages)),
+        setRoomId: roomId => dispatch(setRoomId(roomId)),
     }
 };
 

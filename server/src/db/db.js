@@ -8,6 +8,7 @@ const sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.p
         underscored: true,
     },
     timezone: dbConfig.timezone,
+    dialectOptions: dbConfig.dialectOptions,
 });
 
 export default sequelize;

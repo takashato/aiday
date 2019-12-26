@@ -1,19 +1,32 @@
 import {get} from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import getSocket from "../../net/socketio";
+import store from "../store";
 
 export const SET_ROOM_ID = 'SET_ROOM_ID';
 export const SET_MESSAGE = 'SET_MESSAGE';
 export const PUSH_MESSAGE = 'PUSH_MESSAGE';
 export const REMOVE_MESSAGE_STAMP = 'REMOVE_MESSAGE_STAMP';
+export const SET_REFRESHING_MESSAGE = 'SET_REFRESHING_MESSAGE';
 
 export function setRoomId(roomId) {
     return (dispatch, getState) => {
-        if (!getState().message.messages || !getState().message.messages[roomId] || getState().message.messages[roomId].length <= 0) {
-            getSocket().emit('retrieve message', {room_id: roomId});
-        }
         dispatch({
             type: SET_ROOM_ID,
             roomId: roomId,
+        });
+        console.log(getState().message.messages);
+        if (!getState().message.messages || !getState().message.messages[roomId] || getState().message.messages[roomId].loaded === false || getState().message.messages[roomId].length <= 0) {
+            dispatch(setRefreshingMessage(true));
+            getSocket().emit('retrieve message', {room_id: roomId});
+        }
+    };
+}
+
+export function setRefreshingMessage(refreshing) {
+    return (dispatch) => {
+        dispatch({
+            type: SET_REFRESHING_MESSAGE,
+            refreshing
         });
     };
 }
@@ -25,6 +38,7 @@ export function setMessages(roomId, messages) {
             roomId: roomId,
             messages: messages,
         });
+        dispatch(setRefreshingMessage(false));
     };
 }
 

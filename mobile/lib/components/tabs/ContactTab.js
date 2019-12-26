@@ -1,6 +1,6 @@
 import React from 'react';
 import {Alert, RefreshControl} from 'react-native';
-import {List, ListItem} from "react-native-ui-kitten";
+import {Layout, List, ListItem} from "react-native-ui-kitten";
 import {Icon} from "react-native-eva-icons";
 import getSocket from "../../net/socketio";
 import {connect} from "react-redux";
@@ -21,7 +21,7 @@ class ContactTab extends React.Component {
         );
     };
 
-    handleContactPress = (index, event) => {
+    handleContactPress = async (index, event) => {
         const {id, room_id} = this.props.contactList.list[index];
         if (!room_id) {
             console.log('Request create room ', id);
@@ -32,8 +32,10 @@ class ContactTab extends React.Component {
             Alert.alert('Đã yêu cầu tạo phòng!');
             return;
         }
-        this.props.setRoomId(room_id);
-        this.props.setTabIndex(2); // Select message
+        this.props.setTabIndex(2).then(() => {
+            if (this.props.message.roomId !== room_id)
+                this.props.setRoomId(room_id);
+        });
     };
 
     async componentDidMount() {
@@ -52,9 +54,11 @@ class ContactTab extends React.Component {
 
     render() {
         return (
-            <List data={this.props.contactList.list} renderItem={this.renderItem}
-                  refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.doRefresh}/>}
-            />
+            <Layout style={{flex: 1}}>
+                <List data={this.props.contactList.list} renderItem={this.renderItem}
+                      refreshControl={<RefreshControl refreshing={this.state.refreshing} onRefresh={this.doRefresh}/>}
+                />
+            </Layout>
         );
     }
 }
@@ -62,12 +66,18 @@ class ContactTab extends React.Component {
 const mapStateToProps = state => {
     return {
         contactList: state.contactList,
+        message: state.message,
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        setTabIndex: tabIndex => dispatch(setTabIndex(tabIndex)),
+        setTabIndex: tabIndex => {
+            return new Promise((resolve) => {
+                dispatch(setTabIndex(tabIndex));
+                resolve();
+            });
+        },
         setRoomId: roomId => dispatch(setRoomId(roomId)),
     };
 };

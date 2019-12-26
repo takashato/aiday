@@ -36,8 +36,10 @@ export function setToken(token) {
 }
 
 export function setTabIndex(tabIndex) {
-    return {
-        type: SET_TAB_INDEX,
-        tabIndex,
+    return (dispatch) => {
+        dispatch({
+            type: SET_TAB_INDEX,
+            tabIndex,
+        });
     };
 }
