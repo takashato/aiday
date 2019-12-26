@@ -5,7 +5,7 @@ import User from "../../../db/models/user_exported";
 import {retrieveContactList} from "./user";
 import RoomUser from "../../../db/models/room_user_exported";
 import {subscribeAllRoom} from "../helpers/room";
-import {createRoom} from "./room";
+import {createRoom, retrieveRoomList} from "./room";
 import userSocketMap from "../storages/user_socket_map";
 import {pushMessage, retrieveMessage} from "./message";
 
@@ -33,6 +33,9 @@ const userHandlers = [
     }, {
         event: 'push message',
         handler: pushMessage
+    }, {
+        event: 'retrieve room list',
+        handler: retrieveRoomList
     }
 ];
 

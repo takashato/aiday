@@ -21,7 +21,8 @@ class MessageTab extends React.Component {
     }
 
     keyboardDidShow = () => {
-        this.scrollView.scrollToEnd({animated: true});
+        if (this && this.scrollView)
+            this.scrollView.scrollToEnd({animated: true});
     };
 
     sendMessage = async () => {
@@ -60,7 +61,7 @@ class MessageTab extends React.Component {
                 <Layout style={style.messageContent}>
                     <Layout style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                         <Text style={style.messageName} category="s1">{item.user.display_name}</Text>
-                        <Text appearance="hint" category="c1">{moment(item.updated_at).format("HH:mm:SS DD/MM/YYYY")}</Text>
+                        <Text appearance="hint" category="c1">{moment(item.updated_at).format("HH:mm:ss DD/MM/YYYY")}</Text>
                     </Layout>
                     <Text style={style.messageText}>{item.message}</Text>
                 </Layout>

@@ -8,6 +8,7 @@ export function handleRetrieveMessage(msg) {
 
 export function handleMessage(msg) {
     if (!msg.room_id || !msg.message) return;
+    console.log('message', msg.message);
     store.dispatch(pushMessage(msg.room_id, msg.message));
 }
 

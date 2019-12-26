@@ -1,15 +1,29 @@
 import Message from "../../../db/models/message_exported";
 import User from "../../../db/models/user_exported";
 import {io} from "../../../server";
+import Room from "../../../db/models/room_exported";
+import {subscribeRoom} from "../helpers/room";
+import RoomUser from "../../../db/models/room_user_exported";
+import moment from "moment";
 
 export async function retrieveMessage(msg) {
-    console.log('retrieve messages');
     const step = msg.step || 0;
     const {room_id} = msg;
     if (!room_id) {
         return;
     }
-    if (!this.subscribedRooms.includes('@' + room_id)) return;
+    if (!this.subscribedRooms.includes('@' + room_id)) {
+        // TODO check
+        const room = await Room.findByPk(room_id);
+        if (!room) return;
+        const roomUser = await RoomUser.build({
+            room_id: room_id,
+            user_id: this.user.id,
+            role_id: 1,
+        });
+        if (!await roomUser.save()) return;
+        await subscribeRoom(this, room_id);
+    }
     try {
         const messages = await Message.findAll({
             where: {
@@ -75,6 +89,7 @@ export async function pushMessage(msg) {
             error: 'Không thể lưu lại tin nhắn.',
             code: 'save_error'
         });
+        return;
     }
 
     this.emit('push message response', {
@@ -94,7 +109,7 @@ export async function pushMessage(msg) {
                 is_admin: this.user.is_admin
             },
             created_at: messageObj.created_at,
-            updated_at: messageObj.updated_at,
+            updated_at: moment().format(),
             pending_stamp: 0,
         }
     });

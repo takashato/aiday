@@ -20,6 +20,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING(32),
 			allowNull: true
 		},
+		is_private: {
+			type: DataTypes.INTEGER(1),
+			allowNull: false
+		},
 		created_at: {
 			type: DataTypes.DATE,
 			allowNull: true
