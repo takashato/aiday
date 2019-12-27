@@ -28,6 +28,10 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING(128),
 			allowNull: false
 		},
+		avatar: {
+			type: DataTypes.STRING(255),
+			allowNull: false
+		},
 		is_admin: {
 			type: DataTypes.INTEGER(1),
 			allowNull: false,

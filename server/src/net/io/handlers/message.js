@@ -36,7 +36,7 @@ export async function retrieveMessage(msg) {
                 {
                     model: User,
                     as: 'user',
-                    attributes: ['id', 'username', 'display_name', 'is_admin'],
+                    attributes: ['id', 'username', 'display_name', 'is_admin', 'avatar'],
                 }
             ]
         });
@@ -52,7 +52,7 @@ export async function retrieveMessage(msg) {
                     username: message.user.username,
                     display_name: message.user.display_name,
                     is_admin: message.user.is_admin,
-                    avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
+                    avatar: message.user.avatar,
                 },
                 pending_stamp: 0,
             });
@@ -102,7 +102,7 @@ export async function pushMessage(msg) {
             id: messageObj.id,
             message: message,
             user: {
-                avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
+                avatar: this.user.avatar,
                 id: this.user.id,
                 username: this.user.username,
                 display_name: this.user.display_name,

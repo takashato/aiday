@@ -95,6 +95,7 @@ export async function doRegister(msg) {
         birthday: birthdayObj.format('YYYY-MM-DD'),
         is_admin: 0,
         display_name: display_name,
+        avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
     });
     try {
         if (!await user.save()) {
