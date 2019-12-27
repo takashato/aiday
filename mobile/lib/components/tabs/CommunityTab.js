@@ -62,7 +62,7 @@ class CommunityTab extends React.Component {
     };
 
     doCreateRoom = () => {
-        getSocket.on('create public room result', this.onCreateResult);
+        getSocket().on('create public room result', this.onCreateResult);
         getSocket().emit('create room', {
             is_private: false,
             name: this.state.roomName,

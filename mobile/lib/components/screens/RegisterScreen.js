@@ -53,6 +53,7 @@ class RegisterScreen extends React.Component {
             }
             return;
         }
+        this.props.navigation.navigate('Login');
         this.props.setUser(msg.user);
     };
 
