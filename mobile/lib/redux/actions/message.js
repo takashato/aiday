@@ -1,12 +1,14 @@
 import {get} from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 import getSocket from "../../net/socketio";
 import store from "../store";
+import {PopoverPlacements} from "react-native-ui-kitten/ui/popover/type";
 
 export const SET_ROOM_ID = 'SET_ROOM_ID';
 export const SET_MESSAGE = 'SET_MESSAGE';
 export const PUSH_MESSAGE = 'PUSH_MESSAGE';
 export const REMOVE_MESSAGE_STAMP = 'REMOVE_MESSAGE_STAMP';
 export const SET_REFRESHING_MESSAGE = 'SET_REFRESHING_MESSAGE';
+export const SET_CHAT_MODE = 'SET_CHAT_MODE';
 
 export function setRoomId(roomId) {
     return (dispatch, getState) => {
@@ -58,4 +60,11 @@ export function removeMessageStamp(roomId, stamp) {
         roomId: roomId,
         stamp: stamp,
     };
+}
+
+export function setChatMode(chatMode) {
+    return {
+        type: SET_CHAT_MODE,
+        mode: chatMode,
+    }
 }

@@ -5,7 +5,7 @@ import {Icon} from "react-native-eva-icons";
 import getSocket from "../../net/socketio";
 import {connect} from "react-redux";
 import {setTabIndex} from "../../redux/actions/user";
-import {setRoomId} from "../../redux/actions/message";
+import {setChatMode, setRoomId} from "../../redux/actions/message";
 
 const PersonIcon = (style) => (<Icon {...style} name="person"/>);
 
@@ -33,8 +33,10 @@ class ContactTab extends React.Component {
             return;
         }
         this.props.setTabIndex(2).then(() => {
-            if (this.props.message.roomId !== room_id)
+            if (this.props.message.roomId !== room_id) {
                 this.props.setRoomId(room_id);
+                this.props.setChatMode('two');
+            }
         });
     };
 
@@ -79,6 +81,7 @@ const mapDispatchToProps = dispatch => {
             });
         },
         setRoomId: roomId => dispatch(setRoomId(roomId)),
+        setChatMode: mode => dispatch(setChatMode(mode)),
     };
 };
 

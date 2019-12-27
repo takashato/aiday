@@ -4,5 +4,9 @@
     "secure": true,
     "reconnection": true,
     "rejectUnauthorized": false
+  },
+  "imgur": {
+    "clientId": "e60bb6519a5d38a",
+    "secret": "ae6ee6eb8dd0ab7a17301bacf0a1728b12142388",
   }
 }

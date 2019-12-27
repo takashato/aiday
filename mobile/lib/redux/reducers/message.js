@@ -1,4 +1,11 @@
-import {PUSH_MESSAGE, REMOVE_MESSAGE_STAMP, SET_MESSAGE, SET_REFRESHING_MESSAGE, SET_ROOM_ID} from "../actions/message";
+import {
+    PUSH_MESSAGE,
+    REMOVE_MESSAGE_STAMP,
+    SET_CHAT_MODE,
+    SET_MESSAGE,
+    SET_REFRESHING_MESSAGE,
+    SET_ROOM_ID
+} from "../actions/message";
 
 const initialState = {
     roomId: null,
@@ -6,6 +13,7 @@ const initialState = {
         placeholder: '', // Make sure that object initialized
     },
     refreshing: false,
+    chatMode: 'multiple',
 };
 
 export function messageReducer(state = initialState, action) {
@@ -52,6 +60,9 @@ export function messageReducer(state = initialState, action) {
             }
         }
         return newState;
+    }
+    if (action.type === SET_CHAT_MODE) {
+        return {...state, mode: action.mode};
     }
     return state;
 }

@@ -7,7 +7,7 @@ import {RefreshControl, StyleSheet, View, Alert} from "react-native";
 import getSocket from "../../net/socketio";
 import {setRefreshing} from "../../redux/actions/room";
 import {setTabIndex} from "../../redux/actions/user";
-import {setRoomId} from "../../redux/actions/message";
+import {setChatMode, setRoomId} from "../../redux/actions/message";
 
 const PeopleIcon = (style) => (<Icon {...style} name="people"/>);
 const PlusIcon = (style) => <Icon {...style} name="plus"/>;
@@ -21,15 +21,18 @@ class CommunityTab extends React.Component {
 
     renderItem = ({item, index}) => {
         return (
-            <ListItem title={item.name} description={item.description} icon={PeopleIcon} onPress={this.handleRoomPress}/>
+            <ListItem title={item.name} description={item.description} icon={PeopleIcon}
+                      onPress={this.handleRoomPress}/>
         );
     };
 
     handleRoomPress = async (index, event) => {
         const {id} = this.props.room.list[index];
         this.props.setTabIndex(2).then(() => {
-            if (this.props.message.roomId !== id)
+            if (this.props.message.roomId !== id) {
                 this.props.setRoomId(id);
+                this.props.setChatMode('multiple');
+            }
         });
     };
 
@@ -145,6 +148,7 @@ const mapDispatchToProps = dispatch => {
         },
         setRoomId: roomId => dispatch(setRoomId(roomId)),
         setRefreshing: (refreshing) => dispatch(setRefreshing(refreshing)),
+        setChatMode: mode => dispatch(setChatMode(mode)),
     };
 };
 
