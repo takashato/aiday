@@ -6,6 +6,7 @@ import getSocket from "../../net/socketio";
 import {connect} from "react-redux";
 import {setTabIndex} from "../../redux/actions/user";
 import {setChatMode, setRoomId} from "../../redux/actions/message";
+import {setAppMainTitle, setChatTitle} from "../../redux/actions/app";
 
 const PersonIcon = (style) => (<Icon {...style} name="person"/>);
 
@@ -22,7 +23,8 @@ class ContactTab extends React.Component {
     };
 
     handleContactPress = async (index, event) => {
-        const {id, room_id} = this.props.contactList.list[index];
+        const {id, room_id, display_name} = this.props.contactList.list[index];
+        console.log('Room ID', room_id);
         if (!room_id) {
             console.log('Request create room ', id);
             getSocket().emit('create room', {
@@ -37,6 +39,8 @@ class ContactTab extends React.Component {
                 this.props.setRoomId(room_id);
                 this.props.setChatMode('two');
             }
+            this.props.setChatTitle(display_name);
+            this.props.setAppMainTitle(display_name);
         });
     };
 
@@ -82,6 +86,8 @@ const mapDispatchToProps = dispatch => {
         },
         setRoomId: roomId => dispatch(setRoomId(roomId)),
         setChatMode: mode => dispatch(setChatMode(mode)),
+        setAppMainTitle: title => dispatch(setAppMainTitle(title)),
+        setChatTitle: title => dispatch(setChatTitle(title)),
     };
 };
 

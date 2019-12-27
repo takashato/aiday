@@ -8,6 +8,7 @@ import getSocket from "../../net/socketio";
 import {setRefreshing} from "../../redux/actions/room";
 import {setTabIndex} from "../../redux/actions/user";
 import {setChatMode, setRoomId} from "../../redux/actions/message";
+import {setAppMainTitle, setChatTitle} from "../../redux/actions/app";
 
 const PeopleIcon = (style) => (<Icon {...style} name="people"/>);
 const PlusIcon = (style) => <Icon {...style} name="plus"/>;
@@ -27,12 +28,14 @@ class CommunityTab extends React.Component {
     };
 
     handleRoomPress = async (index, event) => {
-        const {id} = this.props.room.list[index];
+        const {id, name} = this.props.room.list[index];
         this.props.setTabIndex(2).then(() => {
             if (this.props.message.roomId !== id) {
                 this.props.setRoomId(id);
                 this.props.setChatMode('multiple');
             }
+            this.props.setChatTitle(name);
+            this.props.setAppMainTitle(name);
         });
     };
 
@@ -149,6 +152,8 @@ const mapDispatchToProps = dispatch => {
         setRoomId: roomId => dispatch(setRoomId(roomId)),
         setRefreshing: (refreshing) => dispatch(setRefreshing(refreshing)),
         setChatMode: mode => dispatch(setChatMode(mode)),
+        setAppMainTitle: title => dispatch(setAppMainTitle(title)),
+        setChatTitle: title => dispatch(setChatTitle(title)),
     };
 };
 

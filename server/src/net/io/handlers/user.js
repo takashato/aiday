@@ -12,7 +12,7 @@ export async function retrieveContactList(msg) {
         const {user1_id, user2_id} = makeUserIdsInOrder(this.user.id, user.id);
         const pRoom = await PrivateRoom.findOne({
             where: {
-                [Op.or]: [
+                [Op.and]: [
                     {user1_id},
                     {user2_id},
                 ]
