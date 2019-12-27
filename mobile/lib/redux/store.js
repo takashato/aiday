@@ -7,12 +7,13 @@ import reducers from "./reducers/reducer";
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
+    blacklist: ['message', 'room', 'contact', 'user'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-const store = createStore(reducers, applyMiddleware(thunk));
-// const store = createStore(persistedReducer, applyMiddleware(thunk));
+// const store = createStore(reducers, applyMiddleware(thunk));
+const store = createStore(persistedReducer, applyMiddleware(thunk));
 export const persistor = persistStore(store);
 
 export default store;

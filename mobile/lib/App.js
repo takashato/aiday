@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import {mapping, dark as darkTheme} from '@eva-design/eva';
+import {mapping, dark as darkTheme, light as lightTheme} from '@eva-design/eva';
 import {
     StatusBar,
     StyleSheet,
@@ -51,65 +51,66 @@ const LoginNavigator = createStackNavigator({
 const MainContainer = createAppContainer(MainNavigator);
 const LoginContainer = createAppContainer(LoginNavigator);
 
-const ApplicationContent = connect((state) => ({user: state.user}))(
+const App = connect((state) => ({app: state.app, user: state.user}))(
     class extends React.Component {
-        render() {
-            if (!this.props.user.accessToken)
-                return <LoginContainer/>;
-            return <MainContainer/>;
-        }
-    }
-);
+        state = {isLoading: true};
 
-class App extends React.Component {
-    state = {isLoading: true};
-
-    async componentDidMount() {
-        this.setState({isLoading: true});
-        try {
+        async componentDidMount() {
+            this.setState({isLoading: true});
             try {
-                const token = await AsyncStorage.getItem('accessToken');
-                if (token)
-                    await store.dispatch(setToken(token));
+                try {
+                    const token = await AsyncStorage.getItem('accessToken');
+                    if (token)
+                        await store.dispatch(setToken(token));
+                } catch (err) {
+                    console.log(err);
+                }
+                if (await initSocketIO()) {
+                    this.setState({isLoading: false});
+                }
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
-            if (await initSocketIO()) {
-                this.setState({isLoading: false});
+        }
+
+        constructor(props) {
+            super(props);
+        }
+
+        render() {
+            let app;
+            if (this.state.isLoading) {
+                app = <SplashScreen/>;
+            } else {
+                if (!this.props.user.accessToken)
+                    app = <LoginContainer/>;
+                else
+                    app = <MainContainer/>;
             }
-        } catch (err) {
-            console.error(err);
+            return (
+                <>
+                    <StatusBar
+                        backgroundColor={this.props.app.theme === 'light' ? "#EEEEEE" : "#18203B"}
+                        barStyle={this.props.app.theme === 'light' ? 'dark-content' : 'light-content'}
+                    />
+                    <ApplicationProvider mapping={mapping} theme={this.props.app.theme === 'light' ? lightTheme : darkTheme}>
+                        <PersistGate loading={<SplashScreen/>} persistor={persistor}>
+                            {app}
+                        </PersistGate>
+                    </ApplicationProvider>
+                </>
+            );
         }
-    }
+    });
 
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        let app;
-        if (this.state.isLoading) {
-            app = <SplashScreen/>;
-        } else {
-            app = <ApplicationContent/>;
-        }
-        return (
-            <Provider store={store}>
-                <StatusBar
-                    backgroundColor="#18203B"
-                    barStyle="light-content"
-                />
-                <ApplicationProvider mapping={mapping} theme={darkTheme}>
-                    {/*<PersistGate loading={this.state.isLoading ? app : null} persistor={persistor}>*/}
-                    {/*    {app}*/}
-                    {/*</PersistGate>*/}
-                    {app}
-                </ApplicationProvider>
-            </Provider>
-        );
-    }
-}
+const ProvidedApp = () => {
+    return (
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    );
+};
 
 const styles = StyleSheet.create({});
 
-export default App;
+export default ProvidedApp;
