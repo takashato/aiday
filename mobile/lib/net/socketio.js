@@ -5,6 +5,7 @@ import {setUser} from "../redux/actions/user";
 import {handleContactList} from "./handlers/contact_list";
 import {handleMessage, handlePushMessageResponse, handleRetrieveMessage} from "./handlers/message";
 import {handleRoomList} from "./handlers/room";
+import {handleUpdateUserInfoResult} from "./handlers/user";
 
 let socket = null;
 
@@ -41,6 +42,8 @@ export function init() {
         socket.on('push message response', handlePushMessageResponse);
 
         socket.on('room list', handleRoomList);
+
+        socket.on('update user info res', handleUpdateUserInfoResult);
     });
 }
 

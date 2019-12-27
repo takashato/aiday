@@ -108,6 +108,7 @@ async function destroySession(msg) {
     delete userSocketMap[this.user.id]; // Delete from map
     this.user = undefined;
     unbindUserHandlers(this);
+    this.leaveAll();
     this.emit('session destroy response', {});
 }
 
