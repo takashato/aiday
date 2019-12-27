@@ -2,7 +2,7 @@ import {doLogin, doRegister} from "./login";
 import * as JWT from "jsonwebtoken";
 import serverConfig from '../../../config/server';
 import User from "../../../db/models/user_exported";
-import {retrieveContactList} from "./user";
+import {changeInfo, retrieveContactList} from "./user";
 import RoomUser from "../../../db/models/room_user_exported";
 import {subscribeAllRoom} from "../helpers/room";
 import {createRoom, retrieveRoomList} from "./room";
@@ -36,6 +36,9 @@ const userHandlers = [
     }, {
         event: 'retrieve room list',
         handler: retrieveRoomList
+    }, {
+        event: 'change info',
+        handler: changeInfo,
     }
 ];
 
@@ -90,7 +93,7 @@ async function initSession(msg) {
                 is_admin: user.is_admin,
                 created_at: user.created_at,
                 updated_at: user.updated_at,
-                avatar: 'https://akveo.github.io/react-native-ui-kitten/docs/assets/playground-build/static/media/brand-logo.a78e4b51.png',
+                avatar: user.avatar,
             },
         });
         // Subscribe all room

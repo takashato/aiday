@@ -183,7 +183,6 @@ class MessageTab extends React.Component {
                             }
                             <Input style={style.textInput} onChangeText={this.onTyping} value={this.state.chatText}
                                    size="small"
-                                   onSubmitEditting={this.sendMessage}
                                    placeholder="Nhập gì đó để chat..."
                             />
                             <Button appearance="ghost" status="primary" icon={SendIcon} onPress={this.sendMessage}/>

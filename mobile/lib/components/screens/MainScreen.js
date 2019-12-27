@@ -18,6 +18,7 @@ import MessageTab from "../tabs/MessageTab";
 import {connect} from "react-redux";
 import {setTabIndex, setToken, setUser} from "../../redux/actions/user";
 import {setAppMainTitle, setAppTheme, setChatTitle} from "../../redux/actions/app";
+import UserTab from "../tabs/UserTab";
 
 // const MenuIcon = (style) => (<Icon {...style} name="menu"/>);
 const PeopleIcon = (style) => (<Icon {...style} name="people"/>);
@@ -111,7 +112,7 @@ class MainScreen extends React.Component {
                             <MessageTab/>
                         </Tab>
                         <Tab icon={UserIcon}>
-                            <Text>Người dùng</Text>
+                            <UserTab/>
                         </Tab>
                     </TabView>
                 </Layout>
