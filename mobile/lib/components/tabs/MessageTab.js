@@ -91,16 +91,19 @@ class MessageTab extends React.Component {
     };
 
     renderItem = (item) => {
+        const isSelf = this.props.user.data.id === item.user.id;
         let messageElement = null;
+        let isImage = false;
         if (item.message.startsWith('image:')) {
             const link = item.message.replace('image:', '');
             messageElement = (
                 <TouchableOpacity onPress={() => this.openLink(link)}>
-                    <Layout style={{...style.messageText, height: 300, flexDirection: 'row'}}>
+                    <Layout level={this.props.message.mode === 'multiple' ? '1' : (isSelf ? '4' : '3')} style={{...style.messageText, height: 300, flexDirection: 'row'}}>
                         <Image source={{uri: link}} style={{flex: 1}} resizeMode="contain"/>
                     </Layout>
                 </TouchableOpacity>
             );
+            isImage = true;
         } else {
             messageElement = (<Text style={style.messageText}>{item.message}</Text>);
         }
@@ -112,15 +115,30 @@ class MessageTab extends React.Component {
                     <Layout style={style.messageContent}>
                         <Layout style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
                             <Text style={style.messageName} category="s1">{item.user.display_name}</Text>
-                            <Text appearance="hint"
-                                  category="c1">{moment(item.updated_at).format("HH:mm:ss DD/MM/YYYY")}</Text>
                         </Layout>
                         {messageElement}
                     </Layout>
                 </Layout>
             );
         } else {
-            return null;
+            let messageStyle = item.pending_stamp !== 0 ? style.pendingMessage : style.message;
+            let flexControl = {};
+            if (isSelf) {
+                flexControl.alignSelf = 'flex-end';
+            }
+            return (
+                <>
+                    <Layout style={{...messageStyle, ...flexControl}}>
+                        <Layout level={isSelf ? '4' : '3'} style={{...style.messageContent, flex: isImage ? 1 : null, borderRadius: 10}}>
+                            {messageElement}
+                        </Layout>
+                    </Layout>
+                    <Layout style={{marginTop: 0, marginBottom: 10, ...flexControl}}>
+                        <Text appearance="hint"
+                                  category="c1">{moment(item.updated_at).format("HH:mm:ss DD/MM/YYYY")}</Text>
+                    </Layout>
+                </>
+            );
         }
     };
 
